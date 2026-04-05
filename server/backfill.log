@@ -1,0 +1,214 @@
+Starting music composer backfill...
+Found 210 movies to backfill.
+[1/210] No  - Pulp Fiction: Not found on TMDB
+[2/210] No  - Inglourious Basterds: Not found on TMDB
+[3/210] No  - GoodFellas: Not found on TMDB
+[4/210] No  - The Wolf of Wall Street: Not found on TMDB
+[5/210] No  - Once Upon a Time... in Hollywood: Not found on TMDB
+[6/210] Yes - Superman: John Murphy
+[7/210] Yes - Thunderbolts*: Ryan Lott
+[8/210] Yes - The Nice Guys: John Ottman
+[9/210] Yes - Crazy, Stupid, Love.: Christophe Beck
+[10/210] Yes - La La Land: Justin Hurwitz
+[11/210] Yes - The Fall Guy: Dominic Lewis
+[12/210] Yes - Captain America: Brave New World: Laura Karpman
+[13/210] Yes - Venom: The Last Dance: Dan Deacon
+[14/210] Yes - Captain America: Civil War: Henry Jackman
+[15/210] Yes - Avengers: Endgame: Alan Silvestri
+[16/210] Yes - Avengers: Infinity War: Alan Silvestri
+[17/210] Yes - Captain America: The First Avenger: Alan Silvestri
+[18/210] Yes - Captain America: The Winter Soldier: Henry Jackman
+[19/210] Yes - Thor: Patrick Doyle
+[20/210] Yes - Thor: The Dark World: Brian Tyler
+[21/210] Yes - Thor: Love and Thunder: Nami Melumad
+[22/210] Yes - The Incredible Hulk: Craig Armstrong
+[23/210] Yes - Iron Man: Ramin Djawadi
+[24/210] Yes - Guardians of the Galaxy: Tyler Bates
+[25/210] Yes - Avengers: Age of Ultron: Danny Elfman
+[26/210] Yes - Thor: Ragnarok: Mark Mothersbaugh
+[27/210] Yes - Black Panther: Ludwig Göransson
+[28/210] Yes - Ant-Man and the Wasp: Christophe Beck
+[29/210] Yes - Spider-Man: Far From Home: Michael Giacchino
+[30/210] Yes - Spider-Man: No Way Home: Michael Giacchino
+[31/210] Yes - Black Panther: Wakanda Forever: Ludwig Göransson
+[32/210] Yes - Ant-Man and the Wasp: Quantumania: Christophe Beck
+[33/210] Yes - Guardians of the Galaxy Vol. 3: John Murphy
+[34/210] Yes - Iron Man 2: John Debney
+[35/210] Yes - The Avengers: Alan Silvestri
+[36/210] Yes - Iron Man 3: Brian Tyler
+[37/210] Yes - Ant-Man: Christophe Beck
+[38/210] Yes - Guardians of the Galaxy Vol. 2: Tyler Bates
+[39/210] Yes - Spider-Man: Homecoming: Michael Giacchino
+[40/210] Yes - Captain Marvel: Pinar Toprak
+[41/210] Yes - Doctor Strange in the Multiverse of Madness: Danny Elfman
+[42/210] Yes - Chef: Lyle Workman
+[43/210] Yes - Grown Ups: Rupert Gregson-Williams
+[44/210] Yes - Grown Ups 2: Rupert Gregson-Williams
+[45/210] Yes - Ocean's Twelve: David Holmes
+[46/210] Yes - Ocean's Thirteen: David Holmes
+[47/210] Yes - Ocean's Eight: Daniel Pemberton
+[48/210] Yes - Ocean's Eleven: David Holmes
+[49/210] Yes - The Martian: Harry Gregson-Williams
+[50/210] Yes - First Man: Justin Hurwitz
+[51/210] Yes - The Notebook: Aaron Zigman
+[52/210] Yes - Aloha: Alex Somers
+[53/210] Yes - The Internship: Christophe Beck
+[54/210] Yes - Wedding Crashers: Rolfe Kent
+[55/210] Yes - The Wrong Missy: Mateo Messina
+[56/210] Yes - The Wedding Ringer: Christopher Lennertz
+[57/210] Yes - Ride Along: Christopher Lennertz
+[58/210] Yes - Ride Along 2: Christopher Lennertz
+[59/210] Yes - Central Intelligence: Ludwig Göransson
+[60/210] Yes - 21 Jump Street: Mark Mothersbaugh
+[61/210] Yes - 22 Jump Street: Mark Mothersbaugh
+[62/210] Yes - Fly Me to the Moon: Daniel Pemberton
+[63/210] Yes - The Fast and the Furious: BT
+[64/210] Yes - 2 Fast 2 Furious: David Arnold
+[65/210] Yes - The Fast and the Furious: Tokyo Drift: Brian Tyler
+[66/210] Yes - Fast Five: Brian Tyler
+[67/210] Yes - Furious 7: Brian Tyler
+[68/210] Yes - The Fate of the Furious: Brian Tyler
+[69/210] Yes - Fast & Furious 6: Lucas Vidal
+[70/210] Yes - Ballerina: Tyler Bates
+[71/210] Yes - John Wick: Tyler Bates
+[72/210] Yes - John Wick: Chapter 2: Joel J. Richard
+[73/210] Yes - John Wick: Chapter 3 - Parabellum: Tyler Bates
+[74/210] Yes - Barbie: Andrew Wyatt
+[75/210] Yes - Catch Me If You Can: John Williams
+[76/210] Yes - Django Unchained: Luis Bacalov
+[77/210] Yes - Sully: Christian Jacob
+[78/210] Yes - Allied: Alan Silvestri
+[79/210] Yes - Ad Astra: Max Richter
+[80/210] Yes - IF: Michael Giacchino
+[81/210] Yes - Mr. & Mrs. Smith: John Powell
+[82/210] Yes - Grudge Match: Trevor Rabin
+[83/210] Yes - Meet the Fockers: Randy Newman
+[84/210] Yes - Meet the Parents: Randy Newman
+[85/210] Yes - Little Fockers: Stephen Trask
+[86/210] Yes - Last Vegas: Mark Mothersbaugh
+[87/210] Yes - The Intern: Theodore Shapiro
+[88/210] Yes - Taxi Driver: Bernard Herrmann
+[89/210] Yes - Passengers: Thomas Newman
+[90/210] Yes - Joker: Hildur Guðnadóttir
+[91/210] Yes - Kingsman: The Secret Service: Matthew Margeson
+[92/210] No  - Bohemian Rhapsody: Not found on TMDB
+[93/210] Yes - Rocketman: Matthew Margeson
+[94/210] Yes - Big: Howard Shore
+[95/210] Yes - Tower Heist: Christophe Beck
+[96/210] Yes - Madame Web: Johan Söderqvist
+[97/210] Yes - Creed: Ludwig Göransson
+[98/210] Yes - The Tourist: James Newton Howard
+[99/210] Yes - Pirates of the Caribbean: The Curse of the Black Pearl: Klaus Badelt
+[100/210] Yes - Pirates of the Caribbean: Dead Man's Chest: Hans Zimmer
+[101/210] Yes - Pirates of the Caribbean: At World's End: Hans Zimmer
+[102/210] Yes - Pirates of the Caribbean: On Stranger Tides: Hans Zimmer
+[103/210] Yes - Pirates of the Caribbean: Dead Men Tell No Tales: Geoff Zanelli
+[104/210] Yes - Man of Steel: Hans Zimmer
+[105/210] Yes - Batman v Superman: Dawn of Justice: Hans Zimmer
+[106/210] Yes - Justice League: Danny Elfman
+[107/210] Yes - Wonder Woman: Rupert Gregson-Williams
+[108/210] Yes - 17 Again: Rolfe Kent
+[109/210] Yes - Baywatch: Christopher Lennertz
+[110/210] Yes - San Andreas: Andrew Lockington
+[111/210] Yes - Dawn of the Planet of the Apes: Michael Giacchino
+[112/210] Yes - War for the Planet of the Apes: Michael Giacchino
+[113/210] Yes - Rise of the Planet of the Apes: Patrick Doyle
+[114/210] Yes - Kingdom of the Planet of the Apes: John Paesano
+[115/210] Yes - Alice in Wonderland: Danny Elfman
+[116/210] Yes - Alice Through the Looking Glass: Danny Elfman
+[117/210] Yes - Jumanji: Welcome to the Jungle: Henry Jackman
+[118/210] Yes - Ready Player One: Alan Silvestri
+[119/210] Yes - The Bourne Legacy: James Newton Howard
+[120/210] Yes - The Bourne Ultimatum: John Powell
+[121/210] Yes - The Bourne Identity: John Powell
+[122/210] Yes - The Bourne Supremacy: John Powell
+[123/210] Yes - Daddy's Home: Michael Andrews
+[124/210] Yes - Daddy's Home 2: Michael Andrews
+[125/210] Yes - The Italian Job: John Powell
+[126/210] Yes - The Transporter: Stanley Clarke
+[127/210] Yes - Transporter 3: Alexandre Azaria
+[128/210] Yes - Transporter 2: Alexandre Azaria
+[129/210] Yes - Rush Hour: Lalo Schifrin
+[130/210] Yes - Rush Hour 2: Lalo Schifrin
+[131/210] Yes - Rush Hour 3: Lalo Schifrin
+[132/210] Yes - Get Smart: Trevor Rabin
+[133/210] Yes - I Love You, Man: Theodore Shapiro
+[134/210] Yes - 21: David Sardy
+[135/210] Yes - A Million Ways to Die in the West: Joel McNeely
+[136/210] Yes - Ted: Walter Murphy
+[137/210] Yes - Ted 2: Walter Murphy
+[138/210] Yes - She's Out of My League: Michael Andrews
+[139/210] Yes - Just Go with It: Rupert Gregson-Williams
+[140/210] Yes - Blended: Rupert Gregson-Williams
+[141/210] Yes - Need for Speed: Nathan Furst
+[142/210] Yes - The Hitman's Bodyguard: Atli Örvarsson
+[143/210] Yes - Kingsman: The Golden Circle: Matthew Margeson
+[144/210] Yes - Bicentennial Man: James Horner
+[145/210] Yes - Home Alone: John Williams
+[146/210] Yes - Spider-Man: Danny Elfman
+[147/210] Yes - Spider-Man 2: Danny Elfman
+[148/210] Yes - Spider-Man 3: Christopher Young
+[149/210] Yes - The Amazing Spider-Man: James Horner
+[150/210] Yes - The Amazing Spider-Man 2: Tom Holkenborg
+[151/210] Yes - Jurassic World: Michael Giacchino
+[152/210] Yes - The Karate Kid: James Horner
+[153/210] Yes - Cheaper by the Dozen: Christophe Beck
+[154/210] Yes - Cheaper by the Dozen 2: John Debney
+[155/210] Yes - Mr. Bean's Holiday: Howard Goodall
+[156/210] Yes - Mamma Mia!: Benny Andersson
+[157/210] Yes - Mamma Mia! Here We Go Again: Anne Dudley
+[158/210] Yes - Tooth Fairy: George S. Clinton
+[159/210] Yes - Thunder Force: Fil Eisler
+[160/210] Yes - Voyagers: Trevor Gureckis
+[161/210] Yes - Black Adam: Lorne Balfe
+[162/210] Yes - Creed II: Ludwig Göransson
+[163/210] Yes - Definitely, Maybe: Clint Mansell
+[164/210] Yes - Don't Look Up: Nicholas Britell
+[165/210] Yes - Lamborghini: The Man Behind the Legend: Tuomas Kantelinen
+[166/210] Yes - No Hard Feelings: Jessica Rose Weiss
+[167/210] Yes - Spirited: Dominic Lewis
+[168/210] Yes - Tetris: Lorne Balfe
+[169/210] Yes - The Greatest Showman: Joseph Trapanese
+[170/210] Yes - Suicide Squad: Steven Price
+[171/210] Yes - The Batman: Michael Giacchino
+[172/210] Yes - Your Place or Mine: Siddhartha Khosla
+[173/210] Yes - Jobs: John Debney
+[174/210] Yes - Steve Jobs: Daniel Pemberton
+[175/210] Yes - The Founder: Carter Burwell
+[176/210] Yes - Tenet: Ludwig Göransson
+[177/210] Yes - This Means War: Christophe Beck
+[178/210] Yes - Deepwater Horizon: Steve Jablonsky
+[179/210] Yes - Inside Man: Terence Blanchard
+[180/210] Yes - Unstoppable: Harry Gregson-Williams
+[181/210] Yes - A Good Day to Die Hard: Marco Beltrami
+[182/210] Yes - Jack Reacher: Joe Kraemer
+[183/210] Yes - Mission: Impossible - Ghost Protocol: Michael Giacchino
+[184/210] Yes - Mission: Impossible - Fallout: Lorne Balfe
+[185/210] Yes - The Age of Adaline: Rob Simonsen
+[186/210] Yes - White House Down: Harald Kloser
+[187/210] Yes - Split: West Dylan Thordson
+[188/210] Yes - X-Men: Michael Kamen
+[189/210] Yes - X-Men: Days of Future Past: John Ottman
+[190/210] Yes - X-Men: Apocalypse: John Ottman
+[191/210] Yes - Logan: Marco Beltrami
+[192/210] Yes - The Wolverine: Marco Beltrami
+[193/210] Yes - X-Men Origins: Wolverine: Harry Gregson-Williams
+[194/210] Yes - X2: John Ottman
+[195/210] Yes - X-Men: The Last Stand: John Powell
+[196/210] Yes - Dark Phoenix: Hans Zimmer
+[197/210] Yes - X-Men: First Class: Henry Jackman
+[198/210] Yes - Green Lantern: James Newton Howard
+[199/210] Yes - Mission: Impossible - Dead Reckoning Part One: Lorne Balfe
+[200/210] Yes - Mission: Impossible - The Final Reckoning: Max Aruj
+[201/210] Yes - Mission: Impossible - Rogue Nation: Joe Kraemer
+[202/210] Yes - Fantastic Four: John Ottman
+[203/210] Yes - Fantastic Four: Rise of the Silver Surfer: John Ottman
+[204/210] Yes - Fantastic Four: Marco Beltrami
+[205/210] Yes - Our Idiot Brother: Nathan Larson
+[206/210] Yes - Superbad: Lyle Workman
+[207/210] Yes - Why Him?: Theodore Shapiro
+[208/210] Yes - Knives Out: Nathan Johnson
+[209/210] Yes - Project Hail Mary: Daniel Pemberton
+[210/210] Yes - The Irishman: Robbie Robertson
+
+Backfill complete. Updated 204 movies.

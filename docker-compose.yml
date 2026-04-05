@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  movie-tracker:
+    build: .
+    image: movie-tracker:latest
+    container_name: movie-tracker-app
+    ports:
+      - "3000:3000"
+    volumes:
+      # Map a local data directory to persist the SQLite database
+      - ./data:/app/data
+    env_file:
+      - .env
+    restart: unless-stopped
