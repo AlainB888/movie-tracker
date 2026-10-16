@@ -114,6 +114,9 @@ async function extractMetadata(details) {
     const imdbRating = await fetchIMDbRating(details.imdb_id);
     const rating = imdbRating ?? (details.vote_average ? Math.round(details.vote_average * 10) / 10 : null);
 
+    // Runtime in minutes
+    const runtime = details.runtime || null;
+
     return {
         tmdb_id: details.id,
         title: details.title,
@@ -128,10 +131,40 @@ async function extractMetadata(details) {
         genres,
         imdb_rating: rating,
         music_composer,
+        runtime,
     };
 }
 
+
 // ─── Routes ──────────────────────────────────────────────────────────────────
+
+// GET /api/search?q=title&year=2010 — preview TMDB matches without adding
+app.get("/api/search", async (req, res) => {
+    try {
+        const { q, year } = req.query;
+        if (!q) return res.status(400).json({ error: "Query is required" });
+
+        let url = `${TMDB_BASE}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(q)}`;
+        if (year) url += `&year=${year}`;
+        const tmdbRes = await fetch(url);
+        const data = await tmdbRes.json();
+        if (!data.results) return res.json([]);
+
+        const results = data.results.slice(0, 8).map((r) => ({
+            tmdb_id: r.id,
+            title: r.title,
+            release_year: r.release_date ? parseInt(r.release_date.split("-")[0], 10) : null,
+            release_date: r.release_date || null,
+            poster_path: r.poster_path
+                ? `https://image.tmdb.org/t/p/w200${r.poster_path}`
+                : null,
+        }));
+
+        res.json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // GET all movies (optionally filter watchlist vs. watched)
 app.get("/api/movies", (req, res) => {
@@ -163,13 +196,19 @@ app.get("/api/movies/:id", (req, res) => {
 // POST — add single movie (search TMDB + merge user data)
 app.post("/api/movies", async (req, res) => {
     try {
-        const { title, year, rating = 0, watched_in_theatre = 0, watch_count = 1, in_watchlist = 0 } = req.body;
-        if (!title) return res.status(400).json({ error: "Title is required" });
+        const { title, year, rating = 0, watched_in_theatre = 0, watch_count = 1, in_watchlist = 0, tmdb_id: tmdbIdDirect } = req.body;
 
-        const searchResult = await searchTMDB(title, year);
-        if (!searchResult) return res.status(404).json({ error: "Movie not found on TMDB" });
+        let details;
+        if (tmdbIdDirect) {
+            // User picked a specific result from the preview — fetch by ID directly
+            details = await getMovieDetails(tmdbIdDirect);
+        } else {
+            if (!title) return res.status(400).json({ error: "Title is required" });
+            const searchResult = await searchTMDB(title, year);
+            if (!searchResult) return res.status(404).json({ error: "Movie not found on TMDB" });
+            details = await getMovieDetails(searchResult.id);
+        }
 
-        const details = await getMovieDetails(searchResult.id);
         const meta = await extractMetadata(details);
 
         // Check if already exists
@@ -181,8 +220,8 @@ app.post("/api/movies", async (req, res) => {
         const stmt = db.prepare(`
       INSERT INTO movies (tmdb_id, title, rating, watched_in_theatre, watch_count,
                           poster_path, release_year, director, actors, genres, imdb_rating,
-                          music_composer, is_masterpiece, in_watchlist)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)
+                          music_composer, is_masterpiece, in_watchlist, runtime)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?)
     `);
 
         const result = stmt.run(
@@ -198,7 +237,8 @@ app.post("/api/movies", async (req, res) => {
             meta.genres,
             meta.imdb_rating,
             meta.music_composer,
-            in_watchlist ? 1 : 0
+            in_watchlist ? 1 : 0,
+            meta.runtime
         );
 
         const movie = db.prepare("SELECT * FROM movies WHERE id = ?").get(result.lastInsertRowid);
@@ -246,8 +286,8 @@ app.post("/api/movies/bulk", async (req, res) => {
                 const stmt = db.prepare(`
           INSERT INTO movies (tmdb_id, title, rating, watched_in_theatre, watch_count,
                               poster_path, release_year, director, actors, genres, imdb_rating,
-                              music_composer, is_masterpiece, in_watchlist)
-          VALUES (?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)
+                              music_composer, is_masterpiece, in_watchlist, runtime)
+          VALUES (?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?)
         `);
 
                 const insertResult = stmt.run(
@@ -261,7 +301,8 @@ app.post("/api/movies/bulk", async (req, res) => {
                     meta.genres,
                     meta.imdb_rating,
                     meta.music_composer,
-                    in_watchlist ? 1 : 0
+                    in_watchlist ? 1 : 0,
+                    meta.runtime
                 );
 
                 results.push({ title: meta.title, status: "added", id: insertResult.lastInsertRowid });
@@ -328,7 +369,8 @@ app.post("/api/movies/:id/promote", (req, res) => {
         if (!movie) return res.status(404).json({ error: "Movie not found" });
 
         db.prepare(`
-      UPDATE movies SET in_watchlist = 0, watch_count = 1, rating = 0
+      UPDATE movies SET in_watchlist = 0, watch_count = 1, rating = 0,
+                        date_added = CURRENT_TIMESTAMP
       WHERE id = ?
     `).run(req.params.id);
 
@@ -338,6 +380,7 @@ app.post("/api/movies/:id/promote", (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 // DELETE — remove a movie
 app.delete("/api/movies/:id", (req, res) => {

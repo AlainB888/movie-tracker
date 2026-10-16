@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { X, Film, Loader2, Plus, List, Bookmark } from 'lucide-react'
-import { addMovie, bulkAddMovies, updateMovie } from '../api'
+import { useState, useEffect, useRef } from 'react'
+import { X, Film, Loader2, Plus, List, Bookmark, Search, ChevronRight } from 'lucide-react'
+import { addMovie, bulkAddMovies, updateMovie, searchMovies } from '../api'
 import StarRating from './StarRating'
 
 export default function AddMovieModal({ onClose, onMovieAdded, defaultWatchlist = false }) {
@@ -14,6 +14,11 @@ export default function AddMovieModal({ onClose, onMovieAdded, defaultWatchlist 
     const [watchCount, setWatchCount] = useState(1)
     const [saveToWatchlist, setSaveToWatchlist] = useState(defaultWatchlist)
 
+    // Search preview
+    const [searchResults, setSearchResults] = useState(null) // null = not searched yet
+    const [searching, setSearching] = useState(false)
+    const [selectedMatch, setSelectedMatch] = useState(null) // the picked TMDB result
+
     // Bulk-add fields
     const [bulkText, setBulkText] = useState('')
     const [bulkYear, setBulkYear] = useState('')
@@ -22,15 +27,59 @@ export default function AddMovieModal({ onClose, onMovieAdded, defaultWatchlist 
     const [error, setError] = useState('')
     const [bulkResults, setBulkResults] = useState(null)
 
+    // Autofocus the title input when modal opens (single tab)
+    const titleInputRef = useRef(null)
+    useEffect(() => {
+        if (tab === 'single') {
+            const t = setTimeout(() => titleInputRef.current?.focus(), 50)
+            return () => clearTimeout(t)
+        }
+    }, [tab])
+
+    // Debounced search — fires 500ms after user stops typing
+    const searchTimer = useRef(null)
+    useEffect(() => {
+        if (!title.trim()) {
+            setSearchResults(null)
+            setSelectedMatch(null)
+            return
+        }
+        // If the user already picked a match and the title reflects it, don't re-search
+        if (selectedMatch && selectedMatch.title === title) return
+
+        clearTimeout(searchTimer.current)
+        searchTimer.current = setTimeout(async () => {
+            setSearching(true)
+            setSelectedMatch(null)
+            try {
+                const results = await searchMovies(title.trim(), year || undefined)
+                setSearchResults(results)
+            } catch {
+                setSearchResults([])
+            } finally {
+                setSearching(false)
+            }
+        }, 500)
+
+        return () => clearTimeout(searchTimer.current)
+    }, [title, year])
+
+    function handlePickResult(result) {
+        setSelectedMatch(result)
+        setTitle(result.title)
+        setSearchResults(null)
+    }
+
     async function handleSingleSubmit(e) {
         e.preventDefault()
-        if (!title.trim()) return
+        if (!title.trim() && !selectedMatch) return
         setLoading(true)
         setError('')
         try {
             await addMovie({
-                title: title.trim(),
-                year: year ? parseInt(year, 10) : undefined,
+                ...(selectedMatch
+                    ? { tmdb_id: selectedMatch.tmdb_id }
+                    : { title: title.trim(), year: year ? parseInt(year, 10) : undefined }),
                 rating: saveToWatchlist ? 0 : rating,
                 watched_in_theatre: saveToWatchlist ? 0 : (watchedInTheater ? 1 : 0),
                 watch_count: saveToWatchlist ? 0 : watchCount,
@@ -146,28 +195,106 @@ export default function AddMovieModal({ onClose, onMovieAdded, defaultWatchlist 
                             <label className="block text-sm font-medium text-gray-300 mb-1.5">
                                 Movie Title
                             </label>
-                            <input
-                                type="text"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                placeholder="e.g. Inception"
-                                className={inputClass}
-                            />
+                            <div className="relative">
+                                {/* Title input */}
+                                <div className="relative">
+                                    <input
+                                        ref={titleInputRef}
+                                        type="text"
+                                        value={title}
+                                        onChange={(e) => {
+                                            setTitle(e.target.value)
+                                            if (selectedMatch) setSelectedMatch(null)
+                                        }}
+                                        placeholder="e.g. Inception"
+                                        className={inputClass}
+                                        autoComplete="off"
+                                    />
+                                    {searching && (
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                            <Loader2 size={16} className="animate-spin text-brand-400" />
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Selected match confirmation badge */}
+                                {selectedMatch && (
+                                    <div className="mt-2 flex items-center gap-2 px-3 py-1.5 bg-brand-700/20 border border-brand-700/40 rounded-lg text-sm text-brand-400">
+                                        <Search size={13} />
+                                        <span className="truncate">{selectedMatch.title}</span>
+                                        {selectedMatch.release_year && (
+                                            <span className="shrink-0 text-gray-500">({selectedMatch.release_year})</span>
+                                        )}
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setSelectedMatch(null)
+                                                setTitle('')
+                                                titleInputRef.current?.focus()
+                                            }}
+                                            className="ml-auto shrink-0 text-gray-500 hover:text-red-400 transition-colors"
+                                        >
+                                            <X size={13} />
+                                        </button>
+                                    </div>
+                                )}
+
+                                {/* Search results dropdown */}
+                                {searchResults && searchResults.length > 0 && !selectedMatch && (
+                                    <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-gray-900 border border-gray-700/60 rounded-xl overflow-hidden shadow-2xl">
+                                        {searchResults.map((result) => (
+                                            <button
+                                                key={result.tmdb_id}
+                                                type="button"
+                                                onClick={() => handlePickResult(result)}
+                                                className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-gray-800/80 transition-colors text-left border-b border-gray-800/60 last:border-0"
+                                            >
+                                                {/* Poster thumbnail */}
+                                                <div className="shrink-0 w-9 h-14 rounded-md overflow-hidden bg-gray-800 flex items-center justify-center">
+                                                    {result.poster_path ? (
+                                                        <img
+                                                            src={result.poster_path}
+                                                            alt={result.title}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    ) : (
+                                                        <Film size={14} className="text-gray-600" />
+                                                    )}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-sm font-medium text-gray-200 truncate">{result.title}</p>
+                                                    {result.release_year && (
+                                                        <p className="text-xs text-brand-400 mt-0.5">{result.release_year}</p>
+                                                    )}
+                                                </div>
+                                                <ChevronRight size={14} className="shrink-0 text-gray-600" />
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* No results hint */}
+                                {searchResults && searchResults.length === 0 && !searching && title.trim() && !selectedMatch && (
+                                    <p className="mt-1.5 text-xs text-gray-500">No TMDB matches — will attempt a direct search on submit.</p>
+                                )}
+                            </div>
                         </div>
 
-                        {/* Disambiguation hint */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1.5">
-                                Year <span className="text-gray-500 font-normal">(optional, helps find the right movie)</span>
-                            </label>
-                            <input
-                                type="number"
-                                value={year}
-                                onChange={(e) => setYear(e.target.value)}
-                                placeholder="e.g. 2010"
-                                className="w-32 px-4 py-3 bg-gray-800/80 border border-gray-700/60 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700 transition-colors"
-                            />
-                        </div>
+                        {/* Year — only show when no match is selected yet */}
+                        {!selectedMatch && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                                    Year <span className="text-gray-500 font-normal">(optional, narrows the search)</span>
+                                </label>
+                                <input
+                                    type="number"
+                                    value={year}
+                                    onChange={(e) => setYear(e.target.value)}
+                                    placeholder="e.g. 2010"
+                                    className="w-32 px-4 py-3 bg-gray-800/80 border border-gray-700/60 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-brand-700 focus:ring-1 focus:ring-brand-700 transition-colors"
+                                />
+                            </div>
+                        )}
 
                         {/* Watchlist toggle */}
                         <div className="flex items-center justify-between p-3 bg-gray-800/50 rounded-xl border border-gray-700/40">
@@ -236,7 +363,7 @@ export default function AddMovieModal({ onClose, onMovieAdded, defaultWatchlist 
 
                         <button
                             type="submit"
-                            disabled={loading || !title.trim()}
+                            disabled={loading || (!title.trim() && !selectedMatch)}
                             className="w-full py-3 bg-gradient-to-r from-brand-900 to-brand-700 text-white font-semibold rounded-xl hover:from-brand-700 hover:to-brand-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-brand-900/30"
                         >
                             {loading ? (
@@ -247,7 +374,7 @@ export default function AddMovieModal({ onClose, onMovieAdded, defaultWatchlist 
                                 <Plus size={18} />
                             )}
                             {loading
-                                ? 'Searching TMDB...'
+                                ? 'Adding...'
                                 : saveToWatchlist
                                     ? 'Add to Watch Later'
                                     : 'Add Movie'}

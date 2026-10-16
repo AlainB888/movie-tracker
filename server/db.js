@@ -43,5 +43,8 @@ if (!existingColumns.includes("is_masterpiece")) {
 if (!existingColumns.includes("in_watchlist")) {
   db.exec("ALTER TABLE movies ADD COLUMN in_watchlist INTEGER DEFAULT 0");
 }
+if (!existingColumns.includes("runtime")) {
+  db.exec("ALTER TABLE movies ADD COLUMN runtime INTEGER");
+}
 
 export default db;

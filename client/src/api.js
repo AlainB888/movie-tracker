@@ -66,3 +66,11 @@ export async function promoteFromWatchlist(id) {
     if (!res.ok) throw new Error('Failed to promote movie from watchlist');
     return res.json();
 }
+
+export async function searchMovies(q, year) {
+    let url = `${API_BASE}/search?q=${encodeURIComponent(q)}`;
+    if (year) url += `&year=${year}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed to search movies');
+    return res.json();
+}

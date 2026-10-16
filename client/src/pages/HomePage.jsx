@@ -55,6 +55,18 @@ export default function HomePage() {
         loadMovies()
     }, [])
 
+    // Restore scroll position after movies render (coming back from a detail page)
+    useEffect(() => {
+        if (loading) return
+        const savedY = sessionStorage.getItem('homeScrollY')
+        if (savedY) {
+            requestAnimationFrame(() => {
+                window.scrollTo({ top: parseInt(savedY, 10), behavior: 'instant' })
+                sessionStorage.removeItem('homeScrollY')
+            })
+        }
+    }, [loading])
+
     // Extract unique filter options
     const allGenres = useMemo(() => {
         const set = new Set()

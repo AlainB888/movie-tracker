@@ -4,6 +4,6 @@ server/node_modules/
 client/dist/
 .env
 .DS_Store
-movies.db
-server/movies.db
+movies.db*
+server/movies.db*
 data/

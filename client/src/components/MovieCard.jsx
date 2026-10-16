@@ -32,7 +32,10 @@ const MovieCard = memo(function MovieCard({ movie }) {
 
     return (
         <div
-            onClick={() => navigate(`/movie/${movie.id}`)}
+            onClick={() => {
+                sessionStorage.setItem('homeScrollY', window.scrollY)
+                navigate(`/movie/${movie.id}`)
+            }}
             className="group relative cursor-pointer rounded-xl overflow-hidden shadow-lg shadow-black/30 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-brand-900/30"
             ref={cardRef}
         >

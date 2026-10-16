@@ -5,6 +5,7 @@ import {
     Clapperboard,
     Users,
     Calendar,
+    Clock,
     Eye,
     Film,
     Tag,
@@ -81,7 +82,7 @@ export default function MovieDetailsPage() {
             {/* Top bar */}
             <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate(-1)}
                     className="flex items-center gap-2 text-sm text-gray-400 hover:text-brand-400 transition-colors group"
                 >
                     <ArrowLeft
@@ -157,10 +158,20 @@ export default function MovieDetailsPage() {
                                     />
                                 )}
                             </div>
-                            {movie.release_year && (
-                                <p className="text-lg text-gray-400 mt-2 flex items-center gap-2">
-                                    <Calendar size={16} className="text-brand-400" />
-                                    {movie.release_year}
+                            {(movie.release_year || movie.runtime) && (
+                                <p className="text-lg text-gray-400 mt-2 flex items-center gap-4">
+                                    {movie.release_year && (
+                                        <span className="flex items-center gap-2">
+                                            <Calendar size={16} className="text-brand-400" />
+                                            {movie.release_year}
+                                        </span>
+                                    )}
+                                    {movie.runtime && (
+                                        <span className="flex items-center gap-2">
+                                            <Clock size={16} className="text-brand-400" />
+                                            {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+                                        </span>
+                                    )}
                                 </p>
                             )}
                         </div>
